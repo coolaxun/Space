@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block styles %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+    <div class="container"><h1>Login</h1></div>
+    <div class="col-md-4">
+       <form method="POST">
+           {{ form.hidden_tag() }}
+           {{ form.username.label }} {{ form.username() }}
+           {{ form.password.label }} {{ form.password() }}
+       </form>
+    </div>
+{% endblock %}
