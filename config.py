@@ -4,6 +4,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard string'
+    CSRF_ENABLED = True
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     ADMIN_MAIL_SUBJECT_PREFIX = '[ZX]'
     ADMIN_MAIL_SENDER = 'by admin'

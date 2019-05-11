@@ -9,12 +9,13 @@ from flask_login import login_user, login_required, logout_user
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.username.data).first()
+        user = User.query.filter_by(username=form.username.data).first()
+        print(user)
         if user is not None and user.verify_password(form.password.data):
             login_user(user, form.remember_me.data)
-            return redirect(request.args.get('next') or url_for('main.index'))
-        flash('Invalid username or password.')
-    return render_template('auth/login.html', form=form)
+            return redirect(request.args.get('next') or url_for('auth.admin'))
+        # flash('Invalid username or password.')
+    return render_template('auth/login.html', form=form, title='Login')
 
 
 @auth.route('/logout')
@@ -23,4 +24,10 @@ def logout():
     logout_user()
     flash('You have been logged out')
     return redirect(url_for('main.index'))
+
+
+@auth.route('/admin')
+@login_required
+def admin():
+    return render_template('auth/admin.html')
 

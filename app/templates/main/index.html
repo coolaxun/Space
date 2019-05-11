@@ -4,6 +4,15 @@
 {{ super() }}
 {% endblock %}
 
+{% block title %}
+ 首页
+{% endblock %}
+
 {% block content %}
-    <h1>hello</h1>
+    {% for post in posts %}
+       <div>
+          <h1>{{ post.title }}</h1>
+       </div>
+    {% endfor %}
+
 {% endblock %}
