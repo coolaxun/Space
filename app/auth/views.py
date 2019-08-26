@@ -1,5 +1,5 @@
 from flask import render_template, redirect, request, url_for, flash
-from . import auth
+from app.auth import auth
 from .forms import LoginForm
 from ..models import User
 from flask_login import login_user, login_required, logout_user
@@ -30,4 +30,3 @@ def logout():
 @login_required
 def admin():
     return render_template('auth/admin.html')
-
