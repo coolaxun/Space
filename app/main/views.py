@@ -1,10 +1,7 @@
-from datetime import datetime
-from flask import render_template, session, redirect, url_for
+from flask import render_template, session
 
 from . import main
-from .forms import NameForm
 from app.models import User
-from .. import db
 
 
 @main.route('/')

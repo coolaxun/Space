@@ -1,12 +1,12 @@
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
-from app import login_manager
 from datetime import datetime
+
 from flask import current_app
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, SignatureExpired, BadSignature
 
 from app import db
-
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, SignatureExpired, BadSignature
+from app import login_manager
 
 
 class User(UserMixin, db.Model):
@@ -53,17 +53,16 @@ class User(UserMixin, db.Model):
 # relationship table
 # the relation between Role and Permission is many-to-many
 permission_role = db.Table('permission_role',
-                     db.Column('role_id', db.Integer, db.ForeignKey('role.id')),
-                     db.Column('permission_id', db.Integer, db.ForeignKey('permission.id'))
-                     )
-
+                           db.Column('role_id', db.Integer, db.ForeignKey('role.id')),
+                           db.Column('permission_id', db.Integer, db.ForeignKey('permission.id'))
+                           )
 
 # relationship table
 # the relation between Permission and Resource is many-to-many
 permission_resource = db.Table('permission_resource',
-                     db.Column('permission_id', db.Integer, db.ForeignKey('permission.id')),
-                     db.Column('resource_id', db.Integer, db.ForeignKey('resource.id'))
-                     )
+                               db.Column('permission_id', db.Integer, db.ForeignKey('permission.id')),
+                               db.Column('resource_id', db.Integer, db.ForeignKey('resource.id'))
+                               )
 
 
 class Role(db.Model):
@@ -72,8 +71,8 @@ class Role(db.Model):
     name = db.Column(db.String(64), unique=True)
     default = db.Column(db.Boolean, default=False, index=True)
     enabled = db.Column(db.Boolean, default=True)
-    permissions = db.Column(db.Integer)
     create_time = db.Column(db.DateTime, default=datetime.utcnow)
+    default = db.Column(db.Boolean, default=False)
     # users = db.relationship('User', backref='roles', lazy='dynamic')
     perms = db.relationship('Permission', secondary=permission_role, backref=db.backref('roles', lazy='dynamic'))
 
@@ -99,15 +98,15 @@ class Resource(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.utcnow)
 
 
-class Menu(db.Model):
-    __tablename__ = 'menu'
-    id = db.Column(db.Integer, primary_key=True)
-    alias = db.Column(db.String(10), unique=True)
-    name = db.Column(db.String(64))
-    parent_id = db.Column(db.Integer)
-    visible = db.Column(db.Boolean, default=True)
-    enabled = db.Column(db.Boolean, default=True)
-    create_time = db.Column(db.DateTime, default=datetime.utcnow)
+# class Menu(db.Model):
+#     __tablename__ = 'menu'
+#     id = db.Column(db.Integer, primary_key=True)
+#     alias = db.Column(db.String(10), unique=True)
+#     name = db.Column(db.String(64))
+#     parent_id = db.Column(db.Integer)
+#     visible = db.Column(db.Boolean, default=True)
+#     enabled = db.Column(db.Boolean, default=True)
+#     create_time = db.Column(db.DateTime, default=datetime.utcnow)
 
 
 # class Post(db.Model):

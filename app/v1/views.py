@@ -20,6 +20,7 @@ class UserAPI(Resource):
 
 
 class UserListAPI(Resource):
+    # method_decorators = [auth.login_required]
 
     @auth.login_required
     def get(self):

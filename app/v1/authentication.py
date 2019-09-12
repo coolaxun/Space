@@ -34,7 +34,7 @@ def login():
     password = request.form.get('password')
     print(username)
     print('username:' + username if username else '')
-    print('password:'+ password if username else '')
+    print('password:' + password if username else '')
     user = User.query.filter_by(username=username).first()
     if not user or not user.verify_password(password):
         return jsonify({'error': 'Unauthorized Access'})
