@@ -14,9 +14,9 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
-    email = db.Column(db.String(64), unique=True, index=True)
+    email = db.Column(db.String(64), unique=True)
     phone = db.Column(db.String(64), unique=True)
-    create_time = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    create_time = db.Column(db.DateTime, default=datetime.utcnow)
     # roles = db.relationship('Role', secondary=user_roles, backref='users', lazy='dynamic')
 
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
@@ -92,9 +92,11 @@ class Resource(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(10), unique=True)
     name = db.Column(db.String(64))
-    url = db.Column(db.String(64))
-    enabled = db.Column(db.Boolean, default=True)
+    route = db.Column(db.String(64))
+    parent_id = db.Column(db.Integer)
     func = db.Column(db.String(64))
+    category = db.Column(db.String(10))
+    enabled = db.Column(db.Boolean, default=True)
     create_time = db.Column(db.DateTime, default=datetime.utcnow)
 
 

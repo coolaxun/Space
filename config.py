@@ -33,7 +33,7 @@ class DevelopmentConfig(Config):
     # SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:password@localhost:3306/space'
     SQLALCHEMY_DATABASE_URI = os.environ.get('Dev_DATABASE_URL') or \
                               'sqlite:///' + os.path.join(basedir, 'space.sqlite')
-    QLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_COMMIT_TEARDOWN = True
 
 
