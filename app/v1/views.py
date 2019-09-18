@@ -5,15 +5,14 @@ from flask_restful import Resource, Api
 
 from app.v1 import api
 from app.models import User
-from app.v1.authentication import auth
 from app.v1.errors import forbidden
 
 api_init = Api(api)
 
 
 class UserAPI(Resource):
-    def get(self, id):
-        return User.query.filter_by(id=id).first().id
+    def get(self, user_id):
+        return User.query.filter_by(id=user_id).first().id
 
     def post(self, id):
         pass
@@ -22,7 +21,6 @@ class UserAPI(Resource):
 class UserListAPI(Resource):
     # method_decorators = [auth.login_required]
 
-    @auth.login_required
     def get(self):
         users = User.query.all()
         print(users[0].id)
