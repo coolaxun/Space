@@ -3,11 +3,11 @@ from functools import wraps
 from flask import jsonify, g
 from flask_restful import Resource, Api
 
-from app.v1 import api
+from app.serve import serve_blue
 from app.models import User
-from app.v1.errors import forbidden
+from app.common.errors import forbidden
 
-api_init = Api(api)
+api_init = Api(serve_blue)
 
 
 class UserAPI(Resource):
@@ -29,13 +29,6 @@ class UserListAPI(Resource):
 
 api_init.add_resource(UserAPI, '/users/<int:id>', endpoint='user')
 api_init.add_resource(UserListAPI, '/users', endpoint='users')
-
-
-@api.errorhandler(404)
-def page_not_found(e):
-    response = jsonify({'error': 'not found'})
-    response.status_code = 404
-    return response
 
 
 def permission_required(permission):

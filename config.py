@@ -5,6 +5,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard string'
     CSRF_ENABLED = True
+    JSON_AS_ASCII = False  # json中的中文格式
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     ADMIN_MAIL_SUBJECT_PREFIX = '[ZX]'
     ADMIN_MAIL_SENDER = 'by admin'
@@ -19,6 +20,7 @@ class Config:
     CACHE_REDIS_PASSWORD = os.getenv('CACHE_REDIS_PASSWORD')
 
     White_list = [
+        r'/serve/v1.0/hello',
         r'/api/v1.0/login$',
         r'/api/v1.0/logout/$',
     ]
