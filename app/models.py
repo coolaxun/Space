@@ -20,7 +20,7 @@ class User(UserMixin, db.Model):
     # roles = db.relationship('Role', secondary=user_roles, backref='users', lazy='dynamic')
 
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
-    # role = db.relationship('Role', backref=db.backref('users', lazy='dynamic'), lazy='dynamic')
+    role = db.relationship('Role', backref='users')
 
     @property
     def password(self):
@@ -69,7 +69,6 @@ class Role(db.Model):
     __tablename__ = 'role'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
-    default = db.Column(db.Boolean, default=False, index=True)
     enabled = db.Column(db.Boolean, default=True)
     create_time = db.Column(db.DateTime, default=datetime.utcnow)
     default = db.Column(db.Boolean, default=False)

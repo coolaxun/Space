@@ -12,9 +12,17 @@ api_init = Api(serve_blue)
 
 class UserAPI(Resource):
     def get(self, user_id):
-        return User.query.filter_by(id=user_id).first().id
+        user = User.query.filter_by(id=user_id).first()
+        if user:
+            data = {'id': user_id, 'name': user.username}
+        else:
+            data = {'id': '', 'name': ''}
+        return data
 
-    def post(self, id):
+    def post(self, user_id):
+        pass
+
+    def put(self, user_id):
         pass
 
 
@@ -27,7 +35,7 @@ class UserListAPI(Resource):
         return {'users:': users[0].id}
 
 
-api_init.add_resource(UserAPI, '/users/<int:id>', endpoint='user')
+api_init.add_resource(UserAPI, '/users/<int:user_id>', endpoint='user')
 api_init.add_resource(UserListAPI, '/users', endpoint='users')
 
 

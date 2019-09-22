@@ -10,7 +10,10 @@ class UserInfoAPI(Resource):
 
     def get(self, user_id):
         user = User.query.filter_by(id=user_id).first()
-        data = dict(id=user.id, name=user.username)
+        if user:
+            data = dict(id=user.id, name=user.username)
+        else:
+            data = dict(id='', name='')
         return data
 
 
