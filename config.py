@@ -24,6 +24,10 @@ class Config:
         r'/api/v1.0/login$',
         r'/api/v1.0/logout/$',
     ]
+    mongo_con = [
+        # {'alias': 'default', 'db': 'space', 'host': 'localhost', 'port': 27017, 'username': '', 'password': ''}
+        {'alias': 'default', 'db': 'space', 'host': 'localhost', 'port': 27017}
+    ]
 
     @staticmethod
     def init_app(app):

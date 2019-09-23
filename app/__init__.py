@@ -1,7 +1,9 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from config import config
 from flask_login import LoginManager
+from mongoengine import register_connection
+
+from config import config
 
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -17,6 +19,9 @@ def create_app(config_name):
     db.init_app(app)
     login_manager.init_app(app)
 
+    # mongo connect
+    con_mongo(config[config_name].mongo_con)
+
     from .main import main as main_blueprint
     from .serve import serve_blue as serve_1_0_blueprint
     from .auth import auth_blue as auth_blueprint
@@ -27,3 +32,12 @@ def create_app(config_name):
     app.register_blueprint(public_blueprint, url_prefix='/public/v1.0')
 
     return app
+
+
+def con_mongo(con_settings):
+    """connect to mongo"""
+    for con_dict in con_settings:
+        try:
+            register_connection(**con_dict)
+        except Exception as e:
+            print('connect to mongo db error, e=%s' % e)
