@@ -5,7 +5,7 @@ from flask import g, request
 from flask_httpauth import HTTPTokenAuth  # HTTPBasicAuth
 
 from config import config
-from app.models import User
+from app.models.admin import User
 from app.common.errors import unauthorized
 
 auth = HTTPTokenAuth()

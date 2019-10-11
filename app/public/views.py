@@ -1,6 +1,6 @@
 from flask_restful import Resource, Api
 
-from app.serve.models import Post
+from app.models.article import Post
 from app.public import public
 from app.util.log import log
 
@@ -19,4 +19,4 @@ class PostInfoAPI(Resource):
         return data
 
 
-public_api.add_resource(PostInfoAPI, '/posts/<string:post_id>', endpoint='public_post')
+# public_api.add_resource(PostInfoAPI, '/posts/<string:post_id>', endpoint='public_post')

@@ -1,12 +1,7 @@
-import os
-import re
-
-from flask import g, jsonify, request
+from flask import jsonify
 
 from app.serve import serve_blue
-from app.common.errors import forbidden
 from app.auth.authentication import auth
-from config import config
 
 
 @serve_blue.before_request

@@ -1,8 +1,16 @@
 from flask import jsonify, request
+from flask_restful import Api
 
 from app.auth import auth_blue
-from app.models import User
+from app.models.admin import User
 from app import db
+from .resources import SignIn, SignUp
+
+
+auth_api = Api(auth_blue)
+
+auth_api.add_resource(SignIn, '/signin')
+auth_api.add_resource(SignUp, '/signup')
 
 
 @auth_blue.route('/login', methods=['POST'])
@@ -16,19 +24,19 @@ def login():
     return jsonify({'token': token.decode('ascii'), 'code': 20000})
 
 
-@auth_blue.route('/signup', methods=['POST'])
-def signup():
-    username = request.json.get('username')
-    password = request.json.get('password')
-    user = User.query.filter_by(username=username).first()
-    if user:
-        return jsonify({'error': 'user has existed'})
-    new_user = User()
-    new_user.username = username
-    new_user.password = password
-    db.session.add(new_user)
-    db.session.commit()
-    return {'success': 1, 'msg': '注册成功'}
+# @auth_blue.route('/signup', methods=['POST'])
+# def signup():
+#     username = request.json.get('username')
+#     password = request.json.get('password')
+#     user = User.query.filter_by(username=username).first()
+#     if user:
+#         return jsonify({'error': 'user has existed'})
+#     new_user = User()
+#     new_user.username = username
+#     new_user.password = password
+#     db.session.add(new_user)
+#     db.session.commit()
+#     return {'success': 1, 'msg': '注册成功'}
 
 
 @auth_blue.errorhandler(Exception)
